@@ -2,7 +2,8 @@
   "userSecretsId": "aspnet-Intro_MVC_6-a46b1930-10ed-4e7a-a355-158f9d91f9ec",
 
   "dependencies": {
-    "AutoMapper": "4.1.1",
+    "AutoMapper": "5.2.0",
+    "AutoMapper.Extensions.Microsoft.DependencyInjection": "1.2.0",
     "Microsoft.AspNetCore.Authentication.Cookies": "1.0.0",
     "Microsoft.AspNetCore.Diagnostics": "1.0.0",
     "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "1.0.0",

@@ -5,7 +5,7 @@
 @{ 
     foreach (var todo in Model)
     {
-        <li>@todo.Description @</li>   
+        <li>@todo.Description @Html.CheckBoxFor(a=>todo.Completed)</li>   
         
     }
 

@@ -12,6 +12,9 @@ using Microsoft.Extensions.Logging;
 using Intro_MVC_6.Data;
 using Intro_MVC_6.Models;
 using Intro_MVC_6.Services;
+using AutoMapper;
+using Intro_MVC_6.ViewModels;
+using AutoMapper.Configuration;
 
 namespace Intro_MVC_6
 {
@@ -32,6 +35,7 @@ namespace Intro_MVC_6
 
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
+          
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -53,6 +57,7 @@ namespace Intro_MVC_6
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
             services.AddScoped<IApplicationRepository, ApplicationRepository>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,17 +82,22 @@ namespace Intro_MVC_6
             app.UseIdentity();
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
-
-            app.UseMvc(routes =>
+        
+        app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            ConfigureAutoMapper();
         }
-        private static void ConfigureAutomapper()
+        private static void ConfigureAutoMapper()
         {
-            AutoMapper.Mapper.CreateMap<ToDo, ViewModels.ToDoViewModel>();
+            var cfg = new MapperConfigurationExpression();
+            cfg.CreateMap<ToDo, ToDoViewModel>();
+            Mapper.Initialize(cfg);
+
         }
+
     }
 }
