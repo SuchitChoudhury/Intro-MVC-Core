@@ -85,5 +85,9 @@ namespace Intro_MVC_6
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+        private static void ConfigureAutomapper()
+        {
+            AutoMapper.Mapper.CreateMap<ToDo, ViewModels.ToDoViewModel>();
+        }
     }
 }

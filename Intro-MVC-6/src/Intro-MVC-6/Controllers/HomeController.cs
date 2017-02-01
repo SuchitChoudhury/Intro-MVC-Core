@@ -19,7 +19,8 @@ namespace Intro_MVC_6.Controllers
         }
         public IActionResult Index()
         {
-            return View(_repository.GetAllToDos());
+            var _todos = _repository.GetAllToDos();
+            return View(AutoMapper.Mapper.Map(_todos,new List<ViewModels.ToDoViewModel>()));
         }
 
         public IActionResult About()
