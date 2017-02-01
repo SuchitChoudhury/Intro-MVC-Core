@@ -1,12 +1,7 @@
-﻿@using Intro_MVC_6.ViewModels
-@using System.Collections.Generic
+﻿@using System.Collections.Generic
+@using Intro_MVC_6.ViewModels
 @model List<ToDoViewModel>
 
-@{ 
-    foreach (var todo in Model)
-    {
-        <li>@todo.Description @Html.CheckBoxFor(a=>todo.Completed)</li>   
-        
-    }
+@{  
 
 }

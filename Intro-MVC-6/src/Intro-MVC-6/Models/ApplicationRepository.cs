@@ -19,10 +19,18 @@ namespace Intro_MVC_6.Models
         {
             return _dbcontext.ToDos.ToList();
         }
+        public  bool AddToDo(ToDo toDo)
+        {
+           
+            _dbcontext.ToDos.Add(toDo);
+            return _dbcontext.SaveChanges() == 1;
+            
+        }
     }
 
     public interface IApplicationRepository
     {
          List<ToDo> GetAllToDos();
+        bool AddToDo(ToDo toDo);
     }
 }

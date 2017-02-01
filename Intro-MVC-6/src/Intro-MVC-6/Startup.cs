@@ -96,7 +96,6 @@ namespace Intro_MVC_6
             var cfg = new MapperConfigurationExpression();
             cfg.CreateMap<ToDo, ToDoViewModel>();
             Mapper.Initialize(cfg);
-
         }
 
     }
