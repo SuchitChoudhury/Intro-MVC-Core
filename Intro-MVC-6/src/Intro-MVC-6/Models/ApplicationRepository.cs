@@ -26,11 +26,17 @@ namespace Intro_MVC_6.Models
             return _dbcontext.SaveChanges() == 1;
             
         }
+
+        public bool UpdateToDo(ToDo toDo)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public interface IApplicationRepository
     {
          List<ToDo> GetAllToDos();
         bool AddToDo(ToDo toDo);
+        bool UpdateToDo(ToDo toDo);
     }
 }

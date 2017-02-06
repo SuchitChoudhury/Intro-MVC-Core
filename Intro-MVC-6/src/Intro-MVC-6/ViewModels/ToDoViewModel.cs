@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 namespace Intro_MVC_6.ViewModels
 {
     public class ToDoViewModel
-    {
+    {   [Key]
         public int Id { get; set; }
-        [Required]
-        [MinLength(10,ErrorMessage ="Too short Description!")]
+        [Required]      
         public string Description { get; set; }
         public bool Completed { get; set; }
     }

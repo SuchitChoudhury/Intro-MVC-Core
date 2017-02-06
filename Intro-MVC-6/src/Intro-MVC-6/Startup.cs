@@ -18,6 +18,8 @@ using AutoMapper.Configuration;
 
 namespace Intro_MVC_6
 {
+    using System.Reflection;
+
     public class Startup
     {
         public Startup(IHostingEnvironment env)
@@ -35,7 +37,7 @@ namespace Intro_MVC_6
 
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
-          
+
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -52,12 +54,18 @@ namespace Intro_MVC_6
                 .AddDefaultTokenProviders();
 
             services.AddMvc();
-              
+            services.AddMemoryCache();
+            services.AddSession(
+                options =>
+                    {
+                        options.IdleTimeout = TimeSpan.FromMinutes(30);
+                        options.CookieName = ".introToMVC6";
+                    });
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
             services.AddScoped<IApplicationRepository, ApplicationRepository>();
-            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -82,21 +90,29 @@ namespace Intro_MVC_6
             app.UseIdentity();
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
-        
-        app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+            app.UseSession();
+            app.UseMvc(routes =>
+                {
+                    routes.MapRoute(
+                        name: "default",
+                        template: "{controller=Home}/{action=Index}/{id?}");
+                });
+
             ConfigureAutoMapper();
+
         }
         private static void ConfigureAutoMapper()
         {
             var cfg = new MapperConfigurationExpression();
             cfg.CreateMap<ToDo, ToDoViewModel>();
             Mapper.Initialize(cfg);
+            cfg.CreateMap<ToDoViewModel, ToDo>();
+            Mapper.Initialize(cfg);
+            cfg.CreateMap<ToDo, ToDo>();
+            Mapper.Initialize(cfg);
         }
 
     }
+
+
 }

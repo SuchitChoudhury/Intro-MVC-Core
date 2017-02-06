@@ -38,12 +38,12 @@ namespace Intro_MVC_6.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpPost,ExportModelStateToTempData]
         public IActionResult Create(ToDoViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                if (!_repository.AddToDo(AutoMapper.Mapper.Map<ToDo>(viewModel)))
+                if (!_repository.AddToDo(AutoMapper.Mapper.Map(viewModel,new ToDo())))
                 {
                     ModelState.AddModelError("", "The Data Cannot be saved. Try Again later!");
                 }
@@ -51,7 +51,18 @@ namespace Intro_MVC_6.Controllers
 
             return RedirectToAction("Index");
         }
-
+        [HttpPost, ExportModelStateToTempData]
+        public IActionResult Update(ViewModels.ToDoViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                if (!_repository.UpdateToDo(AutoMapper.Mapper.Map(viewModel,new ToDo())))
+                {
+                    ModelState.AddModelError(String.Empty, "There was an unexpected error while saving the ToDo to DB");
+                }
+            }
+            return RedirectToAction("Index");
+        }
        
         public IActionResult Error()
         {
